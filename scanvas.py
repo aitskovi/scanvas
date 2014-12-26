@@ -1,3 +1,4 @@
+import argparse
 from PIL import Image
 
 # Split into an image into 'n' slices of equal size.
@@ -53,7 +54,13 @@ def extend(image, border):
   return extended_image
 
 if __name__ == '__main__':
-  image_name = 'hubble.jpg'
+  description = "Split an image into panels for canvas printing"
+  parser = argparse.ArgumentParser(description=description)
+  parser.add_argument('image')
+
+  args = parser.parse_args()
+  image_name = args.image
+
   image = Image.open(image_name)
   splits = split(image, 3)
   for split in splits:
