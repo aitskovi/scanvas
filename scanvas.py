@@ -57,11 +57,29 @@ if __name__ == '__main__':
   description = "Split an image into panels for canvas printing"
   parser = argparse.ArgumentParser(description=description)
   parser.add_argument('image')
+  parser.add_argument(
+      '--sections',
+      type=int,
+      default=3,
+      help='The number of sections to split the image into. 3 by default.'
+  )
+  parser.add_argument(
+      '--ppi',
+      type=int,
+      default=200,
+      help='The pixels per inch the image will be printed at, 200 by default'
+  )
+  parser.add_argument(
+      '--border',
+      type=float,
+      default=1.5,
+      help='The border size in inches, 1.5 inches by default'
+  )
 
   args = parser.parse_args()
   image_name = args.image
 
   image = Image.open(image_name)
-  splits = split(image, 3)
+  splits = split(image, args.sections)
   for split in splits:
-    extend(split, 300).show()
+    extend(split, int(args.border * args.ppi)).show()
